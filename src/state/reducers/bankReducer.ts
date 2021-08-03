@@ -1,6 +1,60 @@
 import { ActionType } from "../action-types";
 import { Action } from "../actions";
-const initialState: { id: string; amount: number }[] = [];
+
+type Banks = {
+  id: string;
+  amount: number;
+};
+
+const initialState: { total: number; banks: Banks[] } = {
+  total: 0, // imagine the total value is calculated by some other API
+  banks: [],
+};
+
+const reducer = (
+  state: { total: number; banks: Banks[] } = initialState,
+  action: Action
+) => {
+  switch (action.type) {
+    case ActionType.CREATE_BANK: {
+      const { id } = action.payload;
+      const { banks } = state;
+      const updatedBanks = [...banks, { id, amount: 0 }];
+      return { ...state, banks: updatedBanks };
+    }
+    case ActionType.DEPOSIT: {
+      const { id: winId, amount } = action.payload;
+      const { banks } = state;
+      const [filteredBanks, updatedBank] = filterAndPop(winId, "id", banks);
+      updatedBank.amount = updatedBank.amount + amount;
+      return { ...state, banks: [...filteredBanks, updatedBank] };
+    }
+    case ActionType.WITHDRAW: {
+      //   const { id: winId, amount } = action.payload;
+      //   const [newState, updatedItem] = filterAndPop(winId, "id", state);
+      //   updatedItem.amount = updatedItem.amount - amount;
+      //   return [...newState, updatedItem];
+      return state;
+    }
+
+    case ActionType.BANKRUPT: {
+      // const { id: winId } = action.payload;
+      // const [newState, updatedItem] = filterAndPop(winId, "id", state);
+      // updatedItem.amount = 0;
+      // return [...newState, updatedItem];
+      return state;
+    }
+
+    case ActionType.CALCULATE: {
+      const { total } = action.payload;
+      return { ...state, total };
+    }
+    default:
+      return state;
+  }
+};
+
+// helper
 
 const filterAndPop = (idValue: string | number, idKey: string, list: any[]) => {
   let poppedItem: any;
@@ -10,38 +64,6 @@ const filterAndPop = (idValue: string | number, idKey: string, list: any[]) => {
     return false;
   });
   return [newList, poppedItem];
-};
-
-const reducer = (
-  state: { id: string; amount: number }[] = initialState,
-  action: Action
-) => {
-  switch (action.type) {
-    case ActionType.CREATE_BANK: {
-      const { id } = action.payload;
-      return [...state, { id, amount: 0 }];
-    }
-    case ActionType.DEPOSIT: {
-      const { id: winId, amount } = action.payload;
-      const [newState, updatedItem] = filterAndPop(winId, "id", state);
-      updatedItem.amount = updatedItem.amount + amount;
-      return [...newState, updatedItem];
-    }
-    case ActionType.WITHDRAW: {
-      const { id: winId, amount } = action.payload;
-      const [newState, updatedItem] = filterAndPop(winId, "id", state);
-      updatedItem.amount = updatedItem.amount - amount;
-      return [...newState, updatedItem];
-    }
-    case ActionType.BANKRUPT: {
-      const { id: winId } = action.payload;
-      const [newState, updatedItem] = filterAndPop(winId, "id", state);
-      updatedItem.amount = 0;
-      return [...newState, updatedItem];
-    }
-    default:
-      return state;
-  }
 };
 
 export default reducer;

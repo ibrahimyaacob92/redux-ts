@@ -21,11 +21,17 @@ interface CreateBank {
   payload: { id: string };
 }
 
+interface Calculation {
+  type: ActionType.CALCULATE;
+  payload: { total: number };
+}
+
 export type Action =
   | DepositAction
   | WithdrawAction
   | BankruptAction
-  | CreateBank;
+  | CreateBank
+  | Calculation;
 
 //=================================================//
 
@@ -42,9 +48,4 @@ export type WindowAction = RemoveWindow | AddWindow;
 
 //=================================================//
 
-interface Calculation {
-  type: ActionType.CALCULATE;
-  payload: { targetKey: string };
-}
-
-export type CalculationAction = Calculation;
+// export type CalculationAction = Calculation;

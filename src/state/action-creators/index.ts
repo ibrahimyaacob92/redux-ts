@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { actionCreators } from "..";
 import { ActionType } from "../action-types";
 import { Action } from "../actions";
 
@@ -60,11 +59,23 @@ export const removeWindow = (id: string) => {
 
 // ========================================================= //
 
-export const calculate = (target: string) => {
-  return (dispatct: Dispatch) => {
-    dispatct({
+const average = (array: number[]) => {
+  if (array.length !== 0) {
+    return array.reduce((a, b) => a + b) / array.length;
+  } else {
+    return 0;
+  }
+};
+
+export const calculate = (param: number[]) => {
+  const total = average(param);
+  console.log(total, param);
+  return (dispatch: Dispatch) => {
+    //side effect here :
+
+    dispatch({
       type: ActionType.CALCULATE,
-      payload: { target },
+      payload: { total },
     });
   };
 };
