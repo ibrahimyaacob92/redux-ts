@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators, State } from "./state";
+import { actionCreators, State } from "../state";
 import { bindActionCreators } from "redux";
 
 interface Props {}
@@ -19,6 +19,8 @@ function Banks({}: Props): ReactElement {
       createBank(winId);
     }
   }, [windows, bankList]);
+
+  console.log("re-renders");
 
   return (
     <>

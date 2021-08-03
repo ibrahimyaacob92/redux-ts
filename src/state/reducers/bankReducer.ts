@@ -6,13 +6,14 @@ type Banks = {
   amount: number;
 };
 
-const initialState: { total: number; banks: Banks[] } = {
+const initialState: { total: number; debt: number; banks: Banks[] } = {
   total: 0, // imagine the total value is calculated by some other API
+  debt: 5000,
   banks: [],
 };
 
 const reducer = (
-  state: { total: number; banks: Banks[] } = initialState,
+  state: { total: number; banks: Banks[]; debt: number } = initialState,
   action: Action
 ) => {
   switch (action.type) {
@@ -46,8 +47,9 @@ const reducer = (
     }
 
     case ActionType.CALCULATE: {
-      const { total } = action.payload;
-      return { ...state, total };
+      const { key, value } = action.payload;
+
+      return { ...state, [key]: value };
     }
     default:
       return state;

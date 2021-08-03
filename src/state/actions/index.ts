@@ -23,7 +23,7 @@ interface CreateBank {
 
 interface Calculation {
   type: ActionType.CALCULATE;
-  payload: { total: number };
+  payload: { value: number; key: string };
 }
 
 export type Action =

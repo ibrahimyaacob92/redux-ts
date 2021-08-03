@@ -67,15 +67,19 @@ const average = (array: number[]) => {
   }
 };
 
-export const calculate = (param: number[]) => {
-  const total = average(param);
-  console.log(total, param);
+export const calculate = (key: string, args: number[]) => {
+  //side effect here :
+  let value: number;
+  if (key === "total") {
+    value = average(args);
+  } else if (key === "debt") {
+    value = args[1] - args[0];
+  }
+  // console.log(total, args);
   return (dispatch: Dispatch) => {
-    //side effect here :
-
     dispatch({
       type: ActionType.CALCULATE,
-      payload: { total },
+      payload: { key, value },
     });
   };
 };

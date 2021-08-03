@@ -1,26 +1,24 @@
 import React, { ReactElement, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { actionCreators, State } from "./state";
+import { actionCreators, State } from "../state";
 interface Props {}
 
-function TotalAmount(): ReactElement {
+function Debt(): ReactElement {
   const dispatch = useDispatch();
   const { calculate } = bindActionCreators(actionCreators, dispatch);
-  // const bankState = useSelector((state: State) => state.bank);
   const total = useSelector((state: State) => state.bank.total);
-  const bankList = useSelector((state: State) => state.bank.banks);
+  const debt = useSelector((state: State) => state.bank.debt);
 
   useEffect(() => {
     // listening to the changes in state?
     if (true) {
-      const values = bankList.map((bank: any) => bank.amount);
-      calculate(values);
+      calculate("debt", [total, debt]);
     }
-  }, [bankList]);
+  }, [total]);
 
   console.log("total calculated/rendered");
-  return <h1>Average : {total}</h1>;
+  return <h1>Debt : {debt}</h1>;
 }
 
-export default TotalAmount;
+export default Debt;

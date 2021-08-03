@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "./state";
-import TotalAmount from "./TotalAmount";
-import Banks from "./Banks";
+import TotalAmount from "./components/TotalAmount";
+import Banks from "./components/Banks";
+import Debt from "./components/Debt";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function App() {
     <div className="App">
       <h1>Hello App</h1>
       <TotalAmount />
+      <Debt />
       <button onClick={() => addWindow()}>Add</button>
       <Banks />
     </div>
