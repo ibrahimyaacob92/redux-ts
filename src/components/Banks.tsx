@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators, State } from "../state";
 import { bindActionCreators } from "redux";
@@ -6,7 +6,9 @@ import { bindActionCreators } from "redux";
 interface Props {}
 
 function Banks({}: Props): ReactElement {
+  const [item, setItem] = useState(true);
   const dispatch = useDispatch();
+
   const { depositMoney, withdrawMoney, bankrupt, createBank } =
     bindActionCreators(actionCreators, dispatch);
 
@@ -20,7 +22,7 @@ function Banks({}: Props): ReactElement {
     }
   }, [windows, bankList]);
 
-  console.log("re-renders");
+  console.log("Rendering Banks");
 
   return (
     <>
@@ -31,6 +33,12 @@ function Banks({}: Props): ReactElement {
           <button onClick={() => depositMoney(winId, 100)}>Deposit</button>
           <button onClick={() => withdrawMoney(winId, 100)}>Withdraw</button>
           <button onClick={() => bankrupt(winId)}>Bankrupt</button>
+          <button
+            style={{ backgroundColor: item ? "blue" : "red" }}
+            onClick={() => setItem(!item)}
+          >
+            Toggle Me
+          </button>
         </div>
       ))}
     </>

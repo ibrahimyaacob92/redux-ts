@@ -31,19 +31,19 @@ const reducer = (
       return { ...state, banks: [...filteredBanks, updatedBank] };
     }
     case ActionType.WITHDRAW: {
-      //   const { id: winId, amount } = action.payload;
-      //   const [newState, updatedItem] = filterAndPop(winId, "id", state);
-      //   updatedItem.amount = updatedItem.amount - amount;
-      //   return [...newState, updatedItem];
-      return state;
+      const { id: winId, amount } = action.payload;
+      const { banks } = state;
+      const [filteredBanks, updatedBank] = filterAndPop(winId, "id", banks);
+      updatedBank.amount = updatedBank.amount - amount;
+      return { ...state, banks: [...filteredBanks, updatedBank] };
     }
 
     case ActionType.BANKRUPT: {
-      // const { id: winId } = action.payload;
-      // const [newState, updatedItem] = filterAndPop(winId, "id", state);
-      // updatedItem.amount = 0;
-      // return [...newState, updatedItem];
-      return state;
+      const { id: winId } = action.payload;
+      const { banks } = state;
+      const [filteredBanks, updatedBank] = filterAndPop(winId, "id", banks);
+      updatedBank.amount = 0;
+      return { ...state, banks: [...filteredBanks, updatedBank] };
     }
 
     case ActionType.CALCULATE: {

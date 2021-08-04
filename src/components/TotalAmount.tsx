@@ -11,6 +11,7 @@ function TotalAmount(): ReactElement {
   const total = useSelector((state: State) => state.bank.total);
   const bankList = useSelector((state: State) => state.bank.banks);
 
+  console.log("Rendering total Amount");
   useEffect(() => {
     // listening to the changes in state?
     if (true) {

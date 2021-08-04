@@ -10,6 +10,7 @@ function Debt(): ReactElement {
   const total = useSelector((state: State) => state.bank.total);
   const debt = useSelector((state: State) => state.bank.debt);
 
+  console.log("Rednering Debt");
   useEffect(() => {
     // listening to the changes in state?
     if (true) {
